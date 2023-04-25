@@ -1,0 +1,2 @@
+C:\Users\Ayuub\Documents\Uni Work\Soft group proj\draft-master\draft\obj\Debug\draft.esproj.SuggestedBindingRedirects.cache
+C:\Users\Ayuub\Documents\Uni Work\Soft group proj\draft-master\draft\obj\Debug\draft.esproj.CoreCompileInputs.cache
