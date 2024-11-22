@@ -1,11 +1,11 @@
+
 import React, { useState } from 'react';
 import { Page } from 'govuk-react';
 import TopNav from '@govuk-react/top-nav';
-import { Button } from 'govuk-react';
-import { Link } from 'react-router-dom';
 import './App.css';
-import RegInput from './Components/RegInput';
 import { createContext } from 'react';
+import DoctorUpdateMedical from './Components/DoctorUpdateMedical';
+import LogoutButton from './Components/LogoutButton';
 
 export const CurrentContext = createContext({
     email: '',
@@ -20,7 +20,7 @@ export const CurrentContext = createContext({
     setDoB: () => { }
 });
 
-function Register() {
+function DoctorMedicalF() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [NHS, setNHS] = useState('');
@@ -28,20 +28,19 @@ function Register() {
     const [DoB, setDoB] = useState('');
     return (
         <CurrentContext.Provider value={{ email, setEmail, password, setPassword, NHS, setNHS, gender, setGender, DoB, setDoB }}>
-            <Page header={<TopNav company={<TopNav.Anchor href="/" ><TopNav.IconTitle>GP Surgery</TopNav.IconTitle></TopNav.Anchor>}
-                serviceTitle={<TopNav.NavLink href="/" >Registration</TopNav.NavLink>} />}>
 
-                <RegInput />
-                <div>
-                    <Link to="/registeralt">
-                        <Button>Register with postcode</Button>
-                    </Link>
-                </div>
+            <Page header={<TopNav company={<TopNav.Anchor href="/doctorhome" ><TopNav.IconTitle>GP Surgery</TopNav.IconTitle></TopNav.Anchor>}
+                serviceTitle={<TopNav.NavLink href= "/doctorhome" >Doctor Update medical records</TopNav.NavLink>} />}>
+
+
+                <DoctorUpdateMedical />
+
+                <LogoutButton />
 
             </Page>
         </CurrentContext.Provider>
     );
 }
 
-export default Register;
+export default DoctorMedicalF;
 

@@ -1,21 +1,31 @@
 import { Page } from 'govuk-react';
 import TopNav from '@govuk-react/top-nav';
+import Appointments from './Components/Appointments';
+import LogoutButton from './Components/LogoutButton';
 
 
 import './App.css';
 
-function Register() {
+function Receptionist() {
     return (
-        <Page header={<TopNav company={<TopNav.Anchor href="https://example.com" target="new"><TopNav.IconTitle>GP Surgery</TopNav.IconTitle></TopNav.Anchor>} serviceTitle={<TopNav.NavLink href="https://example.com" target="new">Receptionist Home Page</TopNav.NavLink>} />}>
+        <Page header={<TopNav company={<TopNav.Anchor href=" /receptionist" ><TopNav.IconTitle>GP Surgery</TopNav.IconTitle></TopNav.Anchor>}
+            serviceTitle={<TopNav.NavLink href="/receptionist" >Receptionist Home Page</TopNav.NavLink>} />}>
+
+
             <h1>
 
-            <p>Welcome mid receptionist</p>
+       
 
             </h1>
 
+            <Appointments />
+
+
+            
+            <LogoutButton />
 
         </Page>
     );
 }
 
-export default Register;
+export default Receptionist;

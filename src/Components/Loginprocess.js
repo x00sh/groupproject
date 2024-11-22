@@ -1,37 +1,51 @@
 import { useState } from 'react';
 import { Button, LabelText, Input } from 'govuk-react';
-import { Link,Histor } from 'react-router-dom';
-
-
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Loginprocess(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
-    function handleLogin() {
+    function handleFormSubmit(event) {
+        event.preventDefault();
         if (!email || !password) {
             alert('Email and password are required');
             return;
         }
 
-        axios.post('http://localhost:4000/login', { email, password })
-            .then(res => {
-                const userType = res.data.userType;
-                if (userType === 'R') {
-                    alert(userType);   
-
-                } else if (userType === 'D') {
-
-                    alert(userType);    
+        fetch('http://localhost:4000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const userType = data.userType;
+                    if (userType === 'R') {
+                        history.push('/receptionist');
+                    } else if (userType === 'D') {
+                        history.push('/doctorhome');
+                    } else if (userType === 'P') {
+                        history.push('/phome');
+                    } else {
+                        console.error('Unknown user type:', userType);
+                        alert('Unknown user type');
+                    }
+                } else {
+                    console.error(data.message);
+                    alert(data.message);
                 }
-
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error(error);
-                alert(error);
+                alert('An error occurred');
             });
     }
+
 
     function handleChangeEmail(e) {
         setEmail(e.target.value);
@@ -41,23 +55,16 @@ function Loginprocess(props) {
         setPassword(e.target.value);
     }
 
-    function handleDelayedLogin() {
-        setTimeout(() => {
-            handleLogin();
-        }, 1000);
-    }
-
     return (
         <>
             <div>
-            <LabelText>Enter your email:</LabelText>
-            <Input type="email" id="email" name="email" onChange={handleChangeEmail} value={email} />
+                <LabelText>Enter your email:</LabelText>
+                <Input type="email" id="email" name="email" onChange={handleChangeEmail} value={email} />
 
-            <LabelText>Enter your password:</LabelText>
-            <Input type="password" id="password" name="password" onChange={handleChangePassword} value={password} />
-
+                <LabelText>Enter your password:</LabelText>
+                <Input type="password" id="password" name="password" onChange={handleChangePassword} value={password} />
             </div>
-            <Button onClick={handleDelayedLogin}>Log in</Button>
+            <Button onClick={handleFormSubmit}>Log in</Button>
         </>
     );
 }
